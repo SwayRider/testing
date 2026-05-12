@@ -1,0 +1,25 @@
+meta {
+  name: Send (Internal) [-]
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{MAILSERVICE_HOST}}:{{MAILSERVICE_PORT}}/api/v1/mail/internal/send
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "from": "swayrider@example.com",
+    "to": ["{{USER_EMAIL}}"],
+    "subject": "Test mail from SwayRider",
+    "textBody": "This is a test mail"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

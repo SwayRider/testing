@@ -1,0 +1,16 @@
+meta {
+  name: Get Style [-]
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{TILESSERVICE_HOST}}:{{TILESSERVICE_PORT}}/v1/tiles/styles/light
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
