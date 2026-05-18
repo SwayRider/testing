@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "SwayRider Internal",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

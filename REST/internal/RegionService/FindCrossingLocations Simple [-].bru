@@ -1,0 +1,38 @@
+meta {
+  name: FindCrossingLocations Simple [-]
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{REGIONSERVICE_HOST}}:{{REGIONSERVICE_PORT}}/api/v1/region/find-crossing-locations
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "from_region": "benelux",
+    "to_region": "france",
+    "from_location": {
+      "lat": 51.137166820226035,
+      "lon": 5.134021440369002
+    },
+    "to_location": {
+      "lat": 50.68143989441263,
+      "lon": 1.644660654601854
+    },
+    "simple_config": {
+      "road_type_order": [
+        "TRUNK",
+        "PRIMARY"
+      ]
+    },
+    "limit": 3
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

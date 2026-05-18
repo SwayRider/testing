@@ -1,0 +1,27 @@
+meta {
+  name: Search Radius [-]
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/region/search-radius
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "location": {
+      "lat": 42.90737207237733,
+      "lon": 0.4849465967024218
+    },
+    "radius_km": 20.0,
+    "include_extended": true
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

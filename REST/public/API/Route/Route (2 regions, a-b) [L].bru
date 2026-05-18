@@ -1,0 +1,40 @@
+meta {
+  name: Route (2 regions, a-b) [L]
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/route
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "from": {
+      "lat": 44.543603396656295,
+      "lon": 0.24481972241161956
+    },
+    "to": {
+      "lat": 39.98752475639528,
+      "lon": -0.061238038864213536
+    },
+    "vehicle": "motorcycle",
+    "options": {
+      "avoidTollRoads": false,
+      "avoidHighways": false,
+      "avoidFerries": false,
+      "scenicPreference": 0.5
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
