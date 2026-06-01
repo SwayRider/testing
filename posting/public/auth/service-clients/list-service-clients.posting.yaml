@@ -1,0 +1,15 @@
+name: List Service Clients
+description: Lists all configured service clients
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/auth/admin/list-service-clients
+auth:
+  type: bearer_token
+  bearer_token:
+    token: $access_token
+headers:
+- name: content-type
+  value: application/json
+params:
+- name: page
+  value: '1'
+- name: pagesize
+  value: '10'
