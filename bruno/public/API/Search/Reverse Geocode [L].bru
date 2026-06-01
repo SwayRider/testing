@@ -1,0 +1,29 @@
+meta {
+  name: Reverse Geocode [L]
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/search/reverse
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "lat": 51.1326016136591,
+    "lon": 5.156528827039818,
+    "size": 3,
+    "language": "nl"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

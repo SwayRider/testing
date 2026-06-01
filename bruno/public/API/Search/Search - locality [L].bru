@@ -1,0 +1,32 @@
+meta {
+  name: Search - locality [L]
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/search
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "text": "olmen",
+    "viewport": {
+      "bottomLeft": { "lat": 51.069977683650855, "lon": 5.021068213829173 },
+      "topRight":   { "lat": 51.17664283498077, "lon": 5.3147808144633375 }
+    },
+    "language": "nl",
+    "size": 5
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

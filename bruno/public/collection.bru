@@ -1,0 +1,10 @@
+script:post-response {
+  if (res.status == 200) {
+    if (res.body.access_token !== undefined) {
+      bru.setEnvVar("access_token", res.body.access_token);
+    }
+    if (res.body.refresh_token !== undefined) {
+      bru.setEnvVar("refresh_token", res.body.refresh_token);
+    }
+  }
+}

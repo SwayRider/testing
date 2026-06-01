@@ -1,0 +1,12 @@
+vars {
+  API_HOST: http://your-server
+  API_PORT: 34000
+  ADMIN_USER: admin@example.com
+  USER_EMAIL: user@example.com
+  USER_PASSWORD: MyStrongPassword
+  access_token:
+  refresh_token:
+}
+vars:secret [
+  ADMIN_PASSWORD
+]

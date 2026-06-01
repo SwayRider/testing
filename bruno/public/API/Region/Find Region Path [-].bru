@@ -1,0 +1,23 @@
+meta {
+  name: Find Region Path [-]
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/region/find-region-path
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "from_region": "france",
+    "to_region": "germany"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
