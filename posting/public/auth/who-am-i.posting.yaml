@@ -1,0 +1,7 @@
+name: Who Am I
+description: Shows details of the currently logged in user
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/auth/whoami
+auth:
+  type: bearer_token
+  bearer_token:
+    token: $access_token
