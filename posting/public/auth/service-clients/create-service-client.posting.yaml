@@ -1,0 +1,21 @@
+name: Create Service client
+description: Creates a new service client
+method: POST
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/auth/admin/create-service-client
+body:
+  content: |-
+    {
+      "name": "Test",
+      "description": "Test service client",
+      "scopes": [
+        "region:query"
+      ]
+    }
+  content_type: application/json
+auth:
+  type: bearer_token
+  bearer_token:
+    token: $access_token
+headers:
+- name: content-type
+  value: application/json
