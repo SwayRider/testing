@@ -1,0 +1,21 @@
+name: Find Region Path
+description: |-
+  Find the paths to traverse from region A to B
+
+  Simple version
+method: POST
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/region/find-region-path
+body:
+  content: |-
+    {
+      "from_region": "france",
+      "to_region": "germany"
+    }
+  content_type: application/json
+auth:
+  type: bearer_token
+  bearer_token:
+    token: ${access_token}
+headers:
+- name: content-type
+  value: application/json

@@ -1,0 +1,31 @@
+name: Find Route Region Paths
+description: Find the region paths that allow to navigate through the requested waypoints
+method: POST
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/region/find-route-region-paths
+body:
+  content: |-
+    {
+      "waypoints": [
+        {
+          "lat": 50.695,
+          "lon": 1.632
+        },
+        {
+          "lat": 49.272,
+          "lon": 3.996
+        },
+        {
+          "lat": 49.627,
+          "lon": 7.103
+        }
+      ],
+      "width_km": 50
+    }
+  content_type: application/json
+auth:
+  type: bearer_token
+  bearer_token:
+    token: ${access_token}
+headers:
+- name: content-type
+  value: application/json
