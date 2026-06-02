@@ -1,0 +1,22 @@
+name: Search Radius
+description: Returns the regions that intersect with the provided point and radius
+method: POST
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/region/search-radius
+body:
+  content: |-
+    {
+      "location":{
+        "lat": 49.967,
+        "lon": 6.319
+      },
+      "radius_km": 20.0,
+      "include_extended": true
+    }
+  content_type: application/json
+auth:
+  type: bearer_token
+  bearer_token:
+    token: ${access_token}
+headers:
+- name: content-type
+  value: application/json

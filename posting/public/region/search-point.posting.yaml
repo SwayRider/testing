@@ -6,8 +6,8 @@ body:
   content: |-
     {
       "location": {
-        "lat": 42.907,
-        "lon": 0.485
+        "lat": 49.909,
+        "lon": 4.743
       },
       "include_extended": true
     }

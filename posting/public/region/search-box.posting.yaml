@@ -1,0 +1,27 @@
+name: Search Box
+description: Returns the regions that intersect with the box
+method: POST
+url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/api/v1/region/search-box
+body:
+  content: |-
+    {
+      "box": {
+        "bottom_left":{
+          "lat": 50.529,
+          "lon": 2.793
+        },
+        "top_right": {
+          "lat": 50.836,
+          "lon": 5.111
+        }
+      },
+      "include_extended": true
+    }
+  content_type: application/json
+auth:
+  type: bearer_token
+  bearer_token:
+    token: ${access_token}
+headers:
+- name: content-type
+  value: application/json
