@@ -1,0 +1,29 @@
+meta {
+  name: Autocomplete [L]
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/search/autocomplete
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "text": "plaza sando",
+    "focusPoint": { "lat": 37.984, "lon": -1.128 },
+    "size": 5,
+    "language": "es"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
