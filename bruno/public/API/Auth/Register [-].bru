@@ -12,8 +12,14 @@ post {
 
 body:json {
   {
-    "email": "{{USER_EMAIL}}",
+    "email": "{{REGISTER_EMAIL}}",
     "password": "{{USER_PASSWORD}}",
-    "verification_url": "{{API_HOST}}:{{API_PORT}}/web"
+    "verification_url": "{{API_HOST}}:{{API_PORT}}/web/verify-user"
+  }
+}
+
+script:post-response {
+  if (res.status == 200 && res.body.user_id !== undefined) {
+    bru.setVar("registered_user_id", res.body.user_id);
   }
 }

@@ -1,0 +1,30 @@
+meta {
+  name: Find Region Route Paths
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/region/find-route-region-paths
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "waypoints": [
+      { "lat": 49.2583, "lon": 4.0317 },
+      { "lat": 49.7596, "lon": 6.6428 }
+    ],
+    "width_km": 50
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Autocomplete [L]
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{API_HOST}}:{{API_PORT}}/api/v1/search/autocomplete
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "text": "oosthamse",
+    "focusPoint": { "lat": 51.14, "lon": 5.15 },
+    "size": 5,
+    "language": "nl"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

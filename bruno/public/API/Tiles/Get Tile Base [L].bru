@@ -1,0 +1,15 @@
+meta {
+  name: Get Tile Base [L]
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_HOST}}:{{API_PORT}}/v1/tiles/base/0/0/0
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
