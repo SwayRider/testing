@@ -1,0 +1,15 @@
+meta {
+  name: Ping [L]
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{API_HOST}}:{{API_PORT}}/v1/tiles/ping
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}

@@ -1,0 +1,11 @@
+meta {
+  name: Verify User [T]
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_HOST}}:{{API_PORT}}/web/verify-user?u={{verification_user_id}}&t={{verification_token}}
+  body: none
+  auth: inherit
+}

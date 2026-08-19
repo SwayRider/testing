@@ -1,0 +1,15 @@
+meta {
+  name: Get Styles [L]
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{API_HOST}}:{{API_PORT}}/v1/tiles/styles
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}

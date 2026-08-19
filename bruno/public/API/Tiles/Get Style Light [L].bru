@@ -1,0 +1,15 @@
+meta {
+  name: Get Style Light [L]
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{API_HOST}}:{{API_PORT}}/v1/tiles/styles/light
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
