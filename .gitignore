@@ -1,1 +1,4 @@
 bruno/**/environments/*.bru
+
+.DS_Store
+**/.DS_Store
