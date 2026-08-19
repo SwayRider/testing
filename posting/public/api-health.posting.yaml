@@ -1,6 +1,0 @@
-name: API Health
-description: Health check endpoint of the swayrider-api service
-url: ${API_SCHEMA}://${API_HOST}:${API_PORT}/health
-headers:
-- name: content-type
-  value: application/json

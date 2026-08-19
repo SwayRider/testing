@@ -4,55 +4,49 @@ Internal test tooling for the SwayRider platform.
 
 ## Contents
 
-- [REST API Collections](#rest-api-collections)
+- [Bruno Collections](#bruno-collections)
+- [Local Redis](#local-redis)
 
-## REST API Collections
+## Bruno Collections
 
-Bruno-based REST collections for all SwayRider services, in `REST/`.
-A single unified collection covers every service; login and token extraction
-logic is shared rather than duplicated per service.
+Two Bruno collections, covering the two ways to reach SwayRider services locally:
+
+| Folder | Surface | Contents |
+|---|---|---|
+| `bruno/internal/` | Direct per-service calls, bypassing the gateway | `Login/`, `AuthService/`, `MailService/`, `RegionService/`, `RouterService/`, `SearchService/`, `TilesService/`, `Valhalla-Pelias/` (direct Valhalla/Pelias testing) |
+| `bruno/public/` | Gateway-facing surface, routed through `swayrider-api` | `API/` — `Login/`, `Auth/`, `Search/`, `Region/`, `Route/`, `Health` |
+
+Both share the same login/token-extraction pattern; login and token capture live in the `Login` folder of each collection.
 
 ### Getting Started
 
 1. Install [Bruno](https://www.usebruno.com/).
-2. Open the collection: **File → Open Collection** → select the `REST/` folder.
-3. Copy the environment template and fill in your values:
+2. Open the collection: **File → Open Collection** → select `bruno/internal/` or `bruno/public/` depending on which surface you're testing.
+3. Copy the environment template and fill in your values, e.g. for the internal collection:
    ```bash
-   cp REST/environments/SwayRider-Dev.bru.example \
-      REST/environments/SwayRider-Dev.bru
+   cp bruno/internal/environments/SwayRider-Dev.bru.example \
+      bruno/internal/environments/SwayRider-Dev.bru
    ```
-   This file is gitignored and never committed.
-4. Run **Login/Login User** or **Login/Login Admin** — `access_token` and
-   `refresh_token` are captured automatically for subsequent requests.
-
-### Collection Structure
-
-| Folder | Contents |
-|---|---|
-| `Login/` | Shared login requests (user, admin, service client token) |
-| `AuthService/` | User management, JWT tokens, service clients, email verification |
-| `MailService/` | Email sending endpoints |
-| `RegionService/` | Spatial region queries and border crossings |
-| `RouterService/` | Multi-region route planning |
-| `SearchService/` | Geocoding and reverse geocoding |
-| `TilesService/` | Map style endpoints |
-| `Valhalla-Pelias/` | Direct Valhalla routing and Pelias geocoding (external dep testing) |
+   (same pattern for `bruno/public/environments/`). These files are gitignored (`bruno/**/environments/*.bru` in `.gitignore`) and never committed.
+4. Run **Login/Login User** or **Login/Login Admin** — `access_token` and `refresh_token` are captured automatically for subsequent requests.
 
 ### Environment Variables
 
-All variables are defined in `REST/environments/SwayRider-Dev.bru.example`.
+All variables are defined in each collection's `environments/*.bru.example` file. Typical variables:
 
 | Variable | Description |
 |---|---|
-| `AUTHSERVICE_HOST` / `AUTHSERVICE_PORT` | Auth service address |
-| `AUTHSERVICE_WEB_PORT` | Auth service web port (verification pages) |
-| `AUTHSERVICE_ADMIN_USER` / `AUTHSERVICE_ADMIN_PASSWORD` | Admin credentials |
+| `AUTHSERVICE_HOST` / `AUTHSERVICE_PORT` | Auth service address (internal collection) |
+| `API_HOST` / `API_PORT` | Gateway address (public collection) |
+| `ADMIN_USER` / `ADMIN_PASSWORD` | Admin credentials |
 | `USER_EMAIL` / `USER_PASSWORD` | Regular user credentials |
-| `MAILSERVICE_HOST` / `MAILSERVICE_PORT` | Mail service address |
-| `MAIL_SEND_SERVICE_CLIENT_ID` / `MAIL_SEND_SERVICE_CLIENT_SECRET` | Service client for mail |
-| `REGIONSERVICE_HOST` / `REGIONSERVICE_PORT` | Region service address |
-| `ROUTERSERVICE_HOST` / `ROUTERSERVICE_PORT` | Router service address |
-| `SEARCHSERVICE_HOST` / `SEARCHSERVICE_PORT` | Search service address |
-| `TILESSERVICE_HOST` / `TILESSERVICE_PORT` | Tiles service address |
 
 `access_token` and `refresh_token` are populated automatically after a successful login.
+
+## Local Redis
+
+`infra/redis/compose.yml` runs a local Redis instance on port `36379`, needed when exercising `swayrider-api`'s rate limiting and Redis Streams queue against the **public** Bruno collection (the gateway requires Redis to be reachable; direct per-service testing via the internal collection does not need it).
+
+```bash
+docker compose -f infra/redis/compose.yml up -d
+```
