@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: sw-test-postgres
+    restart: unless-stopped
+    environment:
+      # Credentials are read from the SWAYRIDER_LOCAL_POSTGRES_* vars (e.g.
+      # from a sourced .vscode/environment.example or .envrc), with defaults
+      # matching those files so `docker compose up` works out of the box.
+      # Change both in sync if you want different creds.
+      - "POSTGRES_USER=${SWAYRIDER_LOCAL_POSTGRES_USER:-postgresadmin}"
+      - "POSTGRES_PASSWORD=${SWAYRIDER_LOCAL_POSTGRES_PASSWORD:-postgrespassword}"
+      - "POSTGRES_DB=${SWAYRIDER_LOCAL_POSTGRES_DB:-authdb}"
+    # postgres:18+ stores data in major-version subdirectories and expects the
+    # mount at /var/lib/postgresql (not /var/lib/postgresql/data) so pg_upgrade
+    # across image upgrades stays possible — see docker-library/postgres#1259.
+    ports:
+      - "35432:5432"
+    volumes:
+      - sw-test-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SWAYRIDER_LOCAL_POSTGRES_USER:-postgresadmin} -d ${SWAYRIDER_LOCAL_POSTGRES_DB:-authdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 512m
+
+volumes:
+  sw-test-postgres-data:

@@ -1,0 +1,25 @@
+meta {
+  name: Login (MFA enabled) [-]
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{AUTHSERVICE_HOST}}:{{AUTHSERVICE_PORT}}/api/v1/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "{{USER_EMAIL}}",
+    "password": "{{USER_PASSWORD}}",
+    "rememberMe": false
+  }
+}
+
+script:post-response {
+  if (res.status == 200 && res.body.mfaRequired === true) {
+    bru.setVar("mfa_token", res.body.mfaToken);
+  }
+}
