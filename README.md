@@ -95,9 +95,10 @@ docker compose -f infra/redis/compose.yml up -d
 docker compose -f infra/postgres/compose.yml up -d
 ```
 
-Data is persisted in the `sw-test-postgres-data` named volume. To start from a clean slate:
+Data is persisted in the `sw-test-postgres-data` named volume. To reset it (delete the volume, start from a clean slate next time):
 
 ```bash
-docker compose -f infra/postgres/compose.yml down -v
-docker compose -f infra/postgres/compose.yml up -d
+infra/postgres/reset.sh
 ```
+
+For a database that starts fresh on every single startup instead — no volume, no reset needed — use `infra/postgres/compose.transient.yml` in place of `compose.yml` above (`docker compose -f infra/postgres/compose.transient.yml up -d`). Both bind the same port (`35432`), so only run one mode at a time.
