@@ -1,0 +1,27 @@
+meta {
+  name: Regenerate Backup Codes [L]
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{AUTHSERVICE_HOST}}:{{AUTHSERVICE_PORT}}/api/v1/auth/mfa/backup-codes
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{access_token}}
+}
+
+body:json {
+  {
+    "password": "{{USER_PASSWORD}}"
+  }
+}
+
+script:post-response {
+  if (res.status == 200 && res.body.backupCodes !== undefined) {
+    bru.setVar("mfa_backup_codes", res.body.backupCodes.join(", "));
+  }
+}

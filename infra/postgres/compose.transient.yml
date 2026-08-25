@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: sw-test-postgres-transient
+    restart: unless-stopped
+    environment:
+      # Credentials are read from the SWAYRIDER_LOCAL_POSTGRES_* vars (e.g.
+      # from a sourced .vscode/environment.example or .envrc), with defaults
+      # matching those files so `docker compose up` works out of the box.
+      # Change both in sync if you want different creds.
+      - "POSTGRES_USER=${SWAYRIDER_LOCAL_POSTGRES_USER:-postgresadmin}"
+      - "POSTGRES_PASSWORD=${SWAYRIDER_LOCAL_POSTGRES_PASSWORD:-postgrespassword}"
+      - "POSTGRES_DB=${SWAYRIDER_LOCAL_POSTGRES_DB:-authdb}"
+    ports:
+      - "35432:5432"
+    # Transient mode: data lives only in a tmpfs mount, wiped on every
+    # container stop/restart -- no volume to clean up. Sized to match the
+    # memory limit below so a runaway test DB can't grow unbounded. See
+    # compose.yml for the persistent alternative.
+    tmpfs:
+      - /var/lib/postgresql:size=512m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SWAYRIDER_LOCAL_POSTGRES_USER:-postgresadmin} -d ${SWAYRIDER_LOCAL_POSTGRES_DB:-authdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 512m
